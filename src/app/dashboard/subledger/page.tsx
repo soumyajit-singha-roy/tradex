@@ -49,9 +49,7 @@ export default function SubledgerPage() {
     const dateRegex = /\d{2}[\.\-]\d{2}[\.\-]\d{4}/;
 
     // Prioritize BY MARGIN to TO MARGIN
-    // @ts-expect-error - description may not exist on all transactions
     const byMarginTxn = activeAccount.transactions.find(t => t.description?.toUpperCase().includes('BY MARGIN'));
-    // @ts-expect-error - description may not exist on all transactions
     const toMarginTxn = activeAccount.transactions.find(t => t.description?.toUpperCase().includes('TO MARGIN'));
 
     if (byMarginTxn && toMarginTxn && dateRegex.test(byMarginTxn.date) && dateRegex.test(toMarginTxn.date)) {
@@ -63,8 +61,7 @@ export default function SubledgerPage() {
       .map(t => t.date.replace(/\./g, '-'));
       
     if (validDates.length === 0) {
-      // @ts-expect-error - subtitle may not exist on activeAccount
-      return activeAccount.subtitle || '';
+      return (activeAccount as any).subtitle || '';
     }
     if (validDates.length === 1) return validDates[0];
     return `${validDates[0]} to ${validDates[validDates.length - 1]}`;
