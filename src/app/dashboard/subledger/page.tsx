@@ -69,7 +69,7 @@ export default function SubledgerPage() {
   const enrichedTransactions = useMemo(() => {
     if (!activeAccount || !activeAccount.transactions) return [];
     let runningBalance = 0;
-    return activeAccount.transactions.map(txn => {
+    return activeAccount.transactions.map((txn: any) => {
       // We only calculate running balance for real transactions, 
       // not summary rows like 'TOTAL' or 'March PNL'
       
@@ -212,7 +212,7 @@ export default function SubledgerPage() {
 
             {/* Table Rows */}
             <div className="divide-y divide-white/[0.04]">
-              {enrichedTransactions.map((txn, index) => {
+              {enrichedTransactions.map((txn: any, index: number) => {
                 const isDebit = txn.amount < 0;
                 const isCredit = txn.amount > 0;
                 
