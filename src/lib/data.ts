@@ -88,6 +88,26 @@ export const TRADING_ACCOUNTS: TradingAccount[] = [
 
 export const TRANSACTION_HISTORY: Transaction[] = [
   {
+    id: 'txn-1',
+    date: '09.02.2026',
+    referenceNumber: 'TRF-09022026',
+    description: 'TRF',
+    credit: 1000000,
+    debit: null,
+    balance: 1000000,
+    status: 'Successful',
+  },
+  {
+    id: 'txn-2',
+    date: '10.02.2026',
+    referenceNumber: 'TRF-10022026',
+    description: 'TRF',
+    credit: 1000000,
+    debit: null,
+    balance: 2000000,
+    status: 'Successful',
+  },
+  {
     id: 'txn-3',
     date: '10.02.2026',
     referenceNumber: 'MAR-10022026',
@@ -179,7 +199,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-12',
-    date: '30.03.2026',
+    date: '25.02.2026',
     referenceNumber: 'PNL-MAR-2502',
     description: 'BY PNL MARCH',
     credit: null,
@@ -189,9 +209,9 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-13',
-    date: '30.03.2026',
-    referenceNumber: 'SOFT-MAR-2502',
-    description: 'BY SOFTWARE MARCH',
+    date: '25.02.2026',
+    referenceNumber: 'SOFT-FEB-2502-1',
+    description: 'BY SOFTWARE FEB',
     credit: null,
     debit: 187620,
     balance: -590871498.33,
@@ -199,7 +219,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-14',
-    date: '30.03.2026',
+    date: '25.02.2026',
     referenceNumber: 'LDR-MAR-2502',
     description: 'BY LEDGER DR INT',
     credit: null,
@@ -209,7 +229,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-15',
-    date: '30.03.2026',
+    date: '25.02.2026',
     referenceNumber: 'INT-MAR-2502',
     description: 'BY INT MARCH',
     credit: null,
@@ -219,7 +239,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-16',
-    date: '30.03.2026',
+    date: '25.02.2026',
     referenceNumber: 'MAR-2502-2',
     description: 'TO MARGIN',
     credit: 600000000,
@@ -229,7 +249,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-17',
-    date: '31.03.2026',
+    date: '25.02.2026',
     referenceNumber: 'MAR-2502-3',
     description: 'BY MARGIN',
     credit: null,
@@ -239,9 +259,9 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-18',
-    date: '30.04.2026',
-    referenceNumber: 'SOFT-APR-2502',
-    description: 'BY SOFTWARE APRIL',
+    date: '25.02.2026',
+    referenceNumber: 'SOFT-FEB-2502-2',
+    description: 'BY SOFTWARE FEB',
     credit: null,
     debit: 177000,
     balance: -596170994.94,
@@ -249,9 +269,9 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-19',
-    date: '30.04.2026',
-    referenceNumber: 'INT-APR-2502',
-    description: 'BY INT APRIL',
+    date: '25.02.2026',
+    referenceNumber: 'INT-FEB-2502',
+    description: 'BY INT FEB',
     credit: null,
     debit: 5095890.41,
     balance: -601266885.35,
@@ -259,7 +279,7 @@ export const TRANSACTION_HISTORY: Transaction[] = [
   },
   {
     id: 'txn-20',
-    date: '30.04.2026',
+    date: '25.02.2026',
     referenceNumber: 'MAR-2502-4',
     description: 'TO MARGIN',
     credit: 600000000,
@@ -358,6 +378,7 @@ export const SUBLEDGER_DATA = {
         margin: '',
         total: 0,
         transactions: [
+          { date: '10.02.2026', description: 'BY MARGIN', amount: 10000000 },
           { date: '10.02.2026', description: 'BILL FNO', amount: -2222.82 },
           { date: '11.02.2026', description: 'BILL FNO', amount: -5749.29 },
           { date: '13.02.2026', description: 'BILL FNO', amount: 14127.04 },
@@ -367,6 +388,7 @@ export const SUBLEDGER_DATA = {
           { date: '19.02.2026', description: 'BILL FNO', amount: 461763.44 },
           { date: '20.02.2026', description: 'BILL FNO', amount: 23631.56 },
           { date: '24.02.2026', description: 'BILL FNO', amount: 701.74 },
+          { date: '24.02.2026', description: 'TO MARGIN', amount: -10000000 },
           { date: '24.02.2026', description: 'TO PNL TRF A/C DHARMESH', amount: 24220.37 },
         ],
       },
@@ -375,6 +397,7 @@ export const SUBLEDGER_DATA = {
         margin: '',
         total: 0,
         transactions: [
+          { date: '10.02.2026', description: 'BY MARGIN', amount: 10000000 },
           { date: '10.02.2026', description: 'BILL FNO', amount: -2713.84 },
           { date: '11.02.2026', description: 'BILL FNO', amount: -5182.87 },
           { date: '13.02.2026', description: 'BILL FNO', amount: 12068.4 },
@@ -384,6 +407,7 @@ export const SUBLEDGER_DATA = {
           { date: '19.02.2026', description: 'BILL FNO', amount: 426517.33 },
           { date: '20.02.2026', description: 'BILL FNO', amount: 23395.37 },
           { date: '24.02.2026', description: 'BILL FNO', amount: 661.15 },
+          { date: '24.02.2026', description: 'TO MARGIN', amount: -10000000 },
           { date: '24.02.2026', description: 'TO PNL TRF A/C DHARMESH', amount: 58975.73 },
         ],
       },
@@ -392,6 +416,7 @@ export const SUBLEDGER_DATA = {
         margin: '',
         total: 0,
         transactions: [
+          { date: '13.02.2026', description: 'BY MARGIN', amount: 10000000 },
           { date: '13.02.2026', description: 'BILL FNO', amount: -13191.93 },
           { date: '16.02.2026', description: 'BILL FNO', amount: -766662.32 },
           { date: '17.02.2026', description: 'BILL FNO', amount: 6391.69 },
@@ -399,6 +424,7 @@ export const SUBLEDGER_DATA = {
           { date: '19.02.2026', description: 'BILL FNO', amount: 860093.12 },
           { date: '20.02.2026', description: 'BILL FNO', amount: 23922.99 },
           { date: '24.02.2026', description: 'BILL FNO', amount: 652.2 },
+          { date: '24.02.2026', description: 'TO MARGIN', amount: -10000000 },
           { date: '24.02.2026', description: 'TO PNL TRF A/C DHARMESH', amount: 42960.69 },
         ],
       },

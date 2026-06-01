@@ -2,13 +2,16 @@
 
 import { useState, useMemo } from 'react';
 import { Download, ChevronDown } from 'lucide-react';
-import { SUBLEDGER_DATA } from '@/lib/data';
+import { SUBLEDGER_DATA, TRADING_ACCOUNTS } from '@/lib/data';
 import { AnimatedContainer } from '@/components/shared/AnimatedContainer';
 import { GlassCard } from '@/components/shared/GlassCard';
 import { formatCurrency } from '@/lib/formatters';
 
 const YEARS = ['2025', '2026', '2027'] as const;
-const MONTHS = ['February', 'March', 'April'] as const;
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+] as const;
 
 type YearType = typeof YEARS[number];
 type MonthType = typeof MONTHS[number];
@@ -19,29 +22,25 @@ export default function SubledgerPage() {
   const [selectedAccountId, setSelectedAccountId] = useState<string>('');
 
   const getMonthKey = (month: MonthType) => {
-    switch (month) {
-      case 'February': return 'february';
-      case 'March': return 'march';
-      case 'April': return 'april';
-    }
+    return month.toLowerCase();
   };
 
   const monthKey = getMonthKey(selectedMonth);
   // We only have data for 2026 in our current dataset
-  const monthlyData = selectedYear === '2026' ? SUBLEDGER_DATA[monthKey] : null;
+  const monthlyData = selectedYear === '2026' ? (SUBLEDGER_DATA as Record<string, any>)[monthKey] : null;
 
-  const accounts = useMemo(() => {
-    return monthlyData?.accounts || [];
-  }, [monthlyData]);
+  const allAccountNumbers = useMemo(() => {
+    return TRADING_ACCOUNTS.map(a => a.accountNumber);
+  }, []);
 
-  // If the selected account is not in the new month's list, reset it (or keep it if we want it to persist, but better to clear or validate)
   const activeAccount = useMemo(() => {
-    return accounts.find(a => a.id === selectedAccountId) || null;
-  }, [accounts, selectedAccountId]);
+    const monthlyAccounts = monthlyData?.accounts || [];
+    return monthlyAccounts.find((a: any) => a.id === selectedAccountId) || null;
+  }, [monthlyData, selectedAccountId]);
 
-  const formatAmount = (val: number | null | undefined) => {
+  const formatAmount = (val: number | null | undefined, keepSign = false) => {
     if (val === null || val === undefined) return '—';
-    return formatCurrency(Math.abs(val));
+    return formatCurrency(keepSign ? val : Math.abs(val));
   };
 
   const dynamicSubtitle = useMemo(() => {
@@ -117,7 +116,6 @@ export default function SubledgerPage() {
                   value={selectedYear}
                   onChange={(e) => {
                     setSelectedYear(e.target.value as YearType);
-                    setSelectedAccountId(''); // Reset account on year change
                   }}
                   className="w-full pl-4 pr-10 py-2.5 bg-white border border-gray-200 text-gray-900 text-sm font-semibold rounded-lg shadow-sm focus:outline-none focus:border-[#3b82f6]/40 transition-all cursor-pointer appearance-none"
                 >
@@ -141,7 +139,6 @@ export default function SubledgerPage() {
                   value={selectedMonth}
                   onChange={(e) => {
                     setSelectedMonth(e.target.value as MonthType);
-                    setSelectedAccountId(''); // Reset account on month change
                   }}
                   className="w-full pl-4 pr-10 py-2.5 bg-white border border-gray-200 text-gray-900 text-sm font-semibold rounded-lg shadow-sm focus:outline-none focus:border-[#3b82f6]/40 transition-all cursor-pointer appearance-none"
                 >
@@ -164,12 +161,12 @@ export default function SubledgerPage() {
                   id="account-select"
                   value={selectedAccountId}
                   onChange={(e) => setSelectedAccountId(e.target.value)}
-                  disabled={accounts.length === 0}
+                  disabled={allAccountNumbers.length === 0}
                   className="w-full pl-4 pr-10 py-2.5 bg-white border border-gray-200 text-gray-900 text-sm font-semibold rounded-lg shadow-sm focus:outline-none focus:border-[#3b82f6]/40 transition-all cursor-pointer appearance-none disabled:bg-gray-50 disabled:text-gray-400"
                 >
                   <option value="" disabled>Select an account</option>
-                  {accounts.map(account => (
-                    <option key={account.id} value={account.id}>{account.id}</option>
+                  {allAccountNumbers.map(accNumber => (
+                    <option key={accNumber} value={accNumber}>{accNumber}</option>
                   ))}
                 </select>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
@@ -251,7 +248,7 @@ export default function SubledgerPage() {
                     </span>
                     <span className="text-xs text-right font-mono text-gray-900 font-bold">
                       <span className="md:hidden text-gray-400 mr-2 text-[10px] uppercase font-sans">Balance:</span>
-                      {formatAmount(txn.calculatedBalance)}
+                      {formatAmount(txn.calculatedBalance, true)}
                     </span>
                   </div>
                 );
@@ -267,7 +264,7 @@ export default function SubledgerPage() {
               <span className="text-xs text-right font-mono font-bold text-gray-900 hidden md:block"></span>
               <span className={`text-sm text-right font-mono font-bold ${activeAccount.total < 0 ? 'text-[#EF4444]' : 'text-[#91c46b]'}`}>
                 <span className="md:hidden text-gray-500 mr-2 text-[10px] uppercase font-sans">Total:</span>
-                {formatAmount(activeAccount.total)}
+                {formatAmount(activeAccount.total, true)}
               </span>
             </div>
           </GlassCard>
